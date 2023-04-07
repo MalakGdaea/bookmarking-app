@@ -1,0 +1,46 @@
+.form-container {
+  position: absolute;
+  z-index: 2;
+  left: 30%;
+}
+
+.form {
+  height: 12rem;
+  width: 30rem;
+  background-color: rgb(93, 145, 177);
+  border-radius: 2rem;
+  padding: 0.2rem 1rem;
+  color: white;
+  position: relative;
+}
+
+.options-button {
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+}
+
+.input {
+  margin-top: 1rem;
+}
+button {
+  margin-left: 1rem;
+  background-color: white;
+  border: none;
+  border-radius: 0.2rem;
+  height: 2rem;
+  width: 4rem;
+  cursor: pointer;
+  color: #7395ae;
+}
+
+.add-input {
+  width: 70%;
+  height: 2rem;
+  margin-left: 1rem;
+  font-size: large;
+}
+
+#add-input:focus {
+  outline: none;
+}

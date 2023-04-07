@@ -1,0 +1,19 @@
+a {
+  text-decoration: none;
+  margin: 1rem;
+  color: rgb(204, 209, 215);
+}
+.active {
+  color: aliceblue;
+}
+
+.tab {
+  display: flex;
+  height: 100%;
+  border-radius: 0.3rem;
+  justify-content: center;
+}
+
+.tab:hover {
+  background-color:  rgb(92, 141, 172);
+}

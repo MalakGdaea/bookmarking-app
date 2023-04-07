@@ -1,0 +1,19 @@
+.bookmark {
+  color: rgb(57, 52, 52);
+  position: relative;
+}
+
+.bookmark-container {
+  height: 2rem;
+  display: grid;
+  align-content: center;
+}
+
+.site-icon {
+  position: absolute;
+  bottom: 0;
+}
+
+.bookmark-name {
+  margin-left: 1.5rem;
+}

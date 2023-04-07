@@ -1,0 +1,10 @@
+.adding-buttons {
+  display: flex;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  color: rgb(69, 122, 156);
+}
+
+.add {
+  margin-right: 2rem;
+}
