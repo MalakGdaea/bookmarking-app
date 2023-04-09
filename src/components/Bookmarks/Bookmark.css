@@ -16,4 +16,8 @@
 
 .bookmark-name {
   margin-left: 1.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 20rem;
 }

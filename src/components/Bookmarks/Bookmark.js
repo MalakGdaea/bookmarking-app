@@ -10,7 +10,7 @@ function Bookmark({ bookmark }) {
           style={{ width: ICON_SIZE, height: ICON_SIZE }}
           src={`${FAV_ICON_LINK}${getDomain(bookmark.URL)}`}
         />
-        <span className="bookmark-name"> {bookmark.title}</span>
+        <div className="bookmark-name"> {bookmark.title}</div>
       </a>
     </div>
   );
