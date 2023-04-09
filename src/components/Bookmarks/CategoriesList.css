@@ -1,5 +1,5 @@
 .categories-list {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 2rem;
 }

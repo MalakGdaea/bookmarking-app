@@ -1,32 +1,57 @@
 import { SERVER_ROUTE } from "./config";
-const DataManager = function (tabID, setCategories) {
-  const addCategory = (name) => {
-    fetch(`${SERVER_ROUTE}categories/${tabID}/${name}`, {
-      method: "POST",
-    }).then(() => {
-      updateCategories();
+const DataManager = function () {
+
+  const addTab = (tabName, setTabs) => {
+    fetch(`${SERVER_ROUTE}tabs/${tabName}`, { method: "POST" }).then(() => {
+      updateTabsData(setTabs);
     });
   };
 
-  const addBookmark = (bookmark) => {
+  const addCategory = (name, tabID, setCategories) => {
+    fetch(`${SERVER_ROUTE}categories/${tabID}/${name}`, {
+      method: "POST",
+    }).then(() => {
+      updateCategories(tabID, setCategories);
+    });
+  };
+
+  const addBookmark = (bookmark, tabID, setCategories) => {
     fetch(`${SERVER_ROUTE}bookmarks`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(bookmark),
     }).then(() => {
-      updateCategories();
+      updateCategories(tabID, setCategories);
     });
   };
 
-  const deleteCategory = (categoryID) => {
+  const deleteTab = (tabName, setTabs) => {
+    fetch(`${SERVER_ROUTE}tabs/${tabName}`, {
+      method: "DELETE",
+    }).then(() => {
+      updateTabsData(setTabs);
+    });
+  };
+
+  const deleteCategory = (categoryID, tabID, setCategories) => {
     fetch(`${SERVER_ROUTE}categories/${categoryID}`, {
       method: "DELETE",
     }).then(() => {
-      updateCategories();
+      updateCategories(tabID, setCategories);
     });
   };
 
-  const updateCategories = () => {
+  const updateTabsData = (setTabs) => {
+    fetch(`${SERVER_ROUTE}tabs`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((tabs) => {
+        setTabs(tabs);
+      });
+  };
+
+  const updateCategories = (tabID, setCategories) => {
     fetch(`${SERVER_ROUTE}categories/${tabID}`)
       .then((response) => {
         return response.json();
@@ -41,6 +66,9 @@ const DataManager = function (tabID, setCategories) {
     addBookmark,
     deleteCategory,
     updateCategories,
+    addTab,
+    updateTabsData,
+    deleteTab
   };
 };
 

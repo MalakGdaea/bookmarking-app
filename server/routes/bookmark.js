@@ -6,16 +6,6 @@ const Tab = require("../models/Tab");
 const Category = require("../models/Category");
 connect();
 
-router.get("/bookmarks", function (req, res) {
-  try {
-    Bookmark.find({}).then((bookmarks) => {
-      res.send(bookmarks);
-    });
-  } catch (error) {
-    res.send(error);
-  }
-});
-
 router.get("/tabs", function (req, res) {
   try {
     Tab.find({}).then((tabs) => res.send(tabs));
@@ -103,6 +93,27 @@ router.post("/bookmarks", async function (req, res) {
   }
 });
 
+router.delete("/tabs/:tabName", function (req, res) {
+  let tabName = req.params.tabName;
+  try {
+    Tab.findOneAndDelete({ name: tabName }).then((deletedTab) => {
+      if (deletedTab) {
+        Category.deleteMany({ tab: deletedTab._id }).then(() => {
+          deleteBookmarksWithDeletedCategory().then(() => {
+            res
+              .status(202)
+              .send({ msg: `The tab ${tabName} deleted successfully.` });
+          });
+        });
+      } else {
+        res.send({ msg: `There are no tab with the name ${tabName}.` });
+      }
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 router.delete("/bookmarks/:id", async function (req, res) {
   try {
     Bookmark.findByIdAndDelete(req.params.id).then(() => {
@@ -117,7 +128,7 @@ router.delete("/categories/:categoryID", function (req, res) {
   let categoryID = getIdObject(req.params.categoryID);
   try {
     Category.findOneAndDelete({ _id: categoryID }).then((category) => {
-      Bookmark.deleteMany({ category: categoryID }).then(() => {
+      deleteBookmarksWithDeletedCategory().then(() => {
         res
           .status(202)
           .send({ msg: `Category ${category.name} deleted successfully.` });
@@ -127,5 +138,17 @@ router.delete("/categories/:categoryID", function (req, res) {
     res.send(error);
   }
 });
+
+async function deleteBookmarksWithDeletedCategory() {
+  let bookmarks = await Bookmark.find({});
+  bookmarks.forEach(async (bookmark) => {
+    let category = await Category.findOne({ _id: bookmark.category });
+    if (!category) {
+      Bookmark.deleteOne({ _id: bookmark._id }).then(() => {
+        return true;
+      });
+    }
+  });
+}
 
 module.exports = router;

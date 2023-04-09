@@ -1,21 +1,34 @@
 import { useState } from "react";
 import "./Form.css";
-function Form({ formName, hideForm, addTab, addCategory }) {
+import { useNavigate } from "react-router-dom";
+function Form({ formName, hideForm, addTab, addCategory, deleteTab }) {
   const [inputVal, setInputVal] = useState("");
+  const navigate = useNavigate();
   const add = (name) => {
-    if (formName === "Tab") {
+    if (formName === "Add Tab") {
       addTab(name);
     } else {
       addCategory(name);
     }
   };
+
+  const handelButtonClick = () => {
+    if (formName.split(" ")[0] === "Add") {
+      add(inputVal);
+    } else {
+      deleteTab(inputVal);
+      navigate("/");
+    }
+    hideForm();
+  };
+
   const updateInput = (event) => {
     setInputVal(event.target.value);
   };
   return (
     <div className="form-container">
       <div className="form">
-        <h4>Add {formName}</h4>
+        <h4>{formName}</h4>
         <hr />
         <div className="input">
           <span id="input-label">Name:</span>
@@ -29,11 +42,10 @@ function Form({ formName, hideForm, addTab, addCategory }) {
         <div className="options-button">
           <button
             onClick={() => {
-              add(inputVal);
-              hideForm();
+              handelButtonClick();
             }}
           >
-            Add
+            {formName.split(" ")[0]}
           </button>
           <button onClick={() => hideForm()}>Cancel</button>
         </div>

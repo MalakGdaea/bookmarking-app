@@ -3,34 +3,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import TabsBar from "./components/TabsBar/TabsBar";
 import ActionsBar from "./components/ActionsBar/ActionsBar";
 import Home from "./components/Home";
+import DataManager from "./data-manager";
 import { useEffect, useState } from "react";
 
 function App() {
   const [isShown, setIsShown] = useState(false);
   const [sectionName, setSectionName] = useState("Category");
   const [tabs, setTabs] = useState([]);
-
-  const updateTabsData = () => {
-    fetch("http://localhost:3012/tabs")
-      .then((response) => {
-        return response.json();
-      })
-      .then((tabs) => {
-        setTabs(tabs);
-      });
-  };
+  const dataManager = DataManager();
 
   useEffect(() => {
-    updateTabsData();
+    dataManager.updateTabsData(setTabs);
   }, []);
-
-  const addTab = (tabName) => {
-    fetch(`http://localhost:3012/tabs/${tabName}`, { method: "POST" }).then(
-      () => {
-        updateTabsData();
-      }
-    );
-  };
 
   const chooseTab = (tabID) => {
     let tabsCopy = [...tabs];
@@ -56,6 +40,7 @@ function App() {
         <ActionsBar showForm={showForm} />
       </div>
       <Routes>
+        <Route path={`/`} element={<div></div>}></Route>
         <Route
           path="/:tabID"
           element={
@@ -63,7 +48,8 @@ function App() {
               isShown={isShown}
               sectionName={sectionName}
               hideForm={hideForm}
-              addTab= {addTab}
+              addTab={(name) => dataManager.addTab(name, setTabs)}
+              deleteTab={(name) => dataManager.deleteTab(name, setTabs)}
             />
           }
         ></Route>

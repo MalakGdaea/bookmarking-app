@@ -5,12 +5,12 @@ import CategoriesList from "./Bookmarks/CategoriesList";
 import BookmarkForm from "./Bookmarks/BookmarkForm";
 import DataManager from "../data-manager";
 
-function Home({ isShown, sectionName, hideForm, addTab }) {
+function Home({ isShown, sectionName, hideForm, addTab, deleteTab }) {
   const { tabID } = useParams();
   const [categories, setCategories] = useState([]);
   const [editedCategoryID, setEditedCategoryID] = useState("");
   const [displayBookmarkForm, setDisplayBookmarkForm] = useState(false);
-  const dataManager = DataManager(tabID, setCategories);
+  const dataManager = DataManager();
 
   const showBookmarkForm = () => {
     setDisplayBookmarkForm(true);
@@ -21,7 +21,7 @@ function Home({ isShown, sectionName, hideForm, addTab }) {
   };
 
   useEffect(() => {
-    dataManager.updateCategories();
+    dataManager.updateCategories(tabID, setCategories);
   }, [tabID]);
 
   return (
@@ -31,19 +31,26 @@ function Home({ isShown, sectionName, hideForm, addTab }) {
           formName={sectionName}
           hideForm={hideForm}
           addTab={addTab}
-          addCategory={dataManager.addCategory}
+          addCategory={(name) =>
+            dataManager.addCategory(name, tabID, setCategories)
+          }
+          deleteTab={deleteTab}
         />
       )}
       <CategoriesList
         categories={categories}
         setEditedCategoryID={setEditedCategoryID}
         showBookmarkForm={showBookmarkForm}
-        deleteCategory={dataManager.deleteCategory}
+        deleteCategory={(categoryID) =>
+          dataManager.deleteCategory(categoryID, tabID, setCategories)
+        }
       />
       {displayBookmarkForm && (
         <BookmarkForm
           categoryID={editedCategoryID}
-          addBookmark={dataManager.addBookmark}
+          addBookmark={(bookmark) =>
+            dataManager.addBookmark(bookmark, tabID, setCategories)
+          }
           hideBookmarkForm={hideBookmarkForm}
         />
       )}
