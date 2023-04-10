@@ -1,3 +1,4 @@
+import "./Home.css";
 import Form from "../ActionsBar/Form";
 import { useEffect, useState } from "react";
 import CategoriesList from "../Bookmarks/CategoriesList";
@@ -8,6 +9,7 @@ function Home({ tabID, isShown, sectionName, hideForm, addTab, deleteTab }) {
   const [categories, setCategories] = useState([]);
   const [editedCategoryID, setEditedCategoryID] = useState("");
   const [displayBookmarkForm, setDisplayBookmarkForm] = useState(false);
+  const [searchedCategory, setSearchedCategory] = useState("");
   const dataManager = DataManager();
 
   const showBookmarkForm = () => {
@@ -18,12 +20,27 @@ function Home({ tabID, isShown, sectionName, hideForm, addTab, deleteTab }) {
     setDisplayBookmarkForm(false);
   };
 
+  const updateSearchedCategory = (event) => {
+    setSearchedCategory(event.target.value);
+  };
+
+  let wantedCategories = categories.filter((category) =>
+    category.categoryInfo.name.toLowerCase().includes(searchedCategory.toLowerCase())
+  );
+
   useEffect(() => {
     dataManager.updateCategories(tabID, setCategories);
   }, [tabID]);
 
   return (
     <div>
+      <input
+        className="category-input search-input"
+        type="text"
+        value={searchedCategory}
+        placeholder="Find Category"
+        onChange={updateSearchedCategory}
+      />
       {isShown && (
         <Form
           formName={sectionName}
@@ -36,7 +53,7 @@ function Home({ tabID, isShown, sectionName, hideForm, addTab, deleteTab }) {
         />
       )}
       <CategoriesList
-        categories={categories}
+        categories={wantedCategories}
         setEditedCategoryID={setEditedCategoryID}
         showBookmarkForm={showBookmarkForm}
         deleteCategory={(categoryID) =>

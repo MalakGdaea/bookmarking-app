@@ -21,7 +21,7 @@ function MyBookmarks() {
     <div className="all-bookmarks-container">
       <div className="search">
         <div id="bookmarks-number">{myBookmarks.length} bookmarks</div>{" "}
-        <input id="search-input"
+        <input className="search-input"
           type="text"
           value={searchedBookmark}
           onChange={updateSearchBookmark}
