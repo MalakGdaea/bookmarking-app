@@ -1,6 +1,5 @@
 import { SERVER_ROUTE } from "./config";
 const DataManager = function () {
-
   const addTab = (tabName, setTabs) => {
     fetch(`${SERVER_ROUTE}tabs/${tabName}`, { method: "POST" }).then(() => {
       updateTabsData(setTabs);
@@ -61,6 +60,24 @@ const DataManager = function () {
       });
   };
 
+  const getBookmarks = (setMyBookmarks) => {
+    fetch(`${SERVER_ROUTE}bookmarks`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((bookmarks) => {
+        setMyBookmarks(bookmarks);
+      });
+  };
+
+  const deleteBookmark = (bookmarkID, setMyBookmarks) => {
+    fetch(`${SERVER_ROUTE}bookmarks/${bookmarkID}`, {
+      method: "DELETE",
+    }).then(() => {
+      getBookmarks(setMyBookmarks);
+    });
+  };
+
   return {
     addCategory,
     addBookmark,
@@ -68,7 +85,9 @@ const DataManager = function () {
     updateCategories,
     addTab,
     updateTabsData,
-    deleteTab
+    deleteTab,
+    getBookmarks,
+    deleteBookmark,
   };
 };
 

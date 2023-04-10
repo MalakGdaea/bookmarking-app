@@ -1,11 +1,18 @@
 import "./ActionsBar.css";
-function ActionsBar({showForm}) {
+import { ADD_TAB, ADD_Category, DELETE_TAB } from "../../config";
+function ActionsBar({ showForm }) {
   return (
     <div>
       <div className="adding-buttons">
-        <div className="action" onClick={() => showForm("Add Category")}>Add Category</div>
-        <div className="action" onClick={() => showForm("Add Tab")}>Add Tab</div>
-        <div className="action" onClick={() => showForm("Delete Tab")}>delete tab</div>
+        <div className="action" onClick={() => showForm(ADD_Category)}>
+          Add Category
+        </div>
+        <div className="action" onClick={() => showForm(ADD_TAB)}>
+          Add Tab
+        </div>
+        <div className="action" onClick={() => showForm(DELETE_TAB)}>
+          delete tab
+        </div>
       </div>
     </div>
   );

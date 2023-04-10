@@ -14,6 +14,16 @@ router.get("/tabs", function (req, res) {
   }
 });
 
+router.get("/bookmarks", function (req, res) {
+  try {
+    Bookmark.find({}).then((bookmarks) => {
+      res.send(bookmarks);
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 router.get("/categories/:tabID", function (req, res) {
   let tabID = getIdObject(req.params.tabID);
   try {
@@ -116,7 +126,8 @@ router.delete("/tabs/:tabName", function (req, res) {
 
 router.delete("/bookmarks/:id", async function (req, res) {
   try {
-    Bookmark.findByIdAndDelete(req.params.id).then(() => {
+    let bookmarkID = getIdObject(req.params.id)
+    Bookmark.findByIdAndDelete(bookmarkID).then(() => {
       res.status(202).send({ msg: `one bookmark deleted successfully.` });
     });
   } catch (error) {

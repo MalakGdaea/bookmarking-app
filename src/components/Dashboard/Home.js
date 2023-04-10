@@ -1,12 +1,10 @@
-import { useParams } from "react-router-dom";
-import Form from "./ActionsBar/Form";
+import Form from "../ActionsBar/Form";
 import { useEffect, useState } from "react";
-import CategoriesList from "./Bookmarks/CategoriesList";
-import BookmarkForm from "./Bookmarks/BookmarkForm";
-import DataManager from "../data-manager";
+import CategoriesList from "../Bookmarks/CategoriesList";
+import BookmarkForm from "../Bookmarks/BookmarkForm";
+import DataManager from "../../data-manager";
 
-function Home({ isShown, sectionName, hideForm, addTab, deleteTab }) {
-  const { tabID } = useParams();
+function Home({ tabID, isShown, sectionName, hideForm, addTab, deleteTab }) {
   const [categories, setCategories] = useState([]);
   const [editedCategoryID, setEditedCategoryID] = useState("");
   const [displayBookmarkForm, setDisplayBookmarkForm] = useState(false);

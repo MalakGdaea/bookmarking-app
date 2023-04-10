@@ -1,21 +1,17 @@
 import { useState } from "react";
+import { ADD_TAB, ADD_Category, DELETE_TAB } from "../../config";
 import "./Form.css";
 import { useNavigate } from "react-router-dom";
 function Form({ formName, hideForm, addTab, addCategory, deleteTab }) {
   const [inputVal, setInputVal] = useState("");
   const navigate = useNavigate();
-  const add = (name) => {
-    if (formName === "Add Tab") {
-      addTab(name);
-    } else {
-      addCategory(name);
-    }
-  };
 
   const handelButtonClick = () => {
-    if (formName.split(" ")[0] === "Add") {
-      add(inputVal);
-    } else {
+    if (formName === ADD_TAB) {
+      addTab(inputVal);
+    } else if (formName === ADD_Category) {
+      addCategory(inputVal);
+    } else if (formName === DELETE_TAB) {
       deleteTab(inputVal);
       navigate("/");
     }
