@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { connectToBookmarkDB, getIdObject} = require("../services/databaseManager");
+const { connectToBookmarkDB, getIdObject } = require("../services/databaseManager");
 connectToBookmarkDB();
 const databaseQueries = require("../services/databaseQueries");
 
@@ -58,7 +58,7 @@ router.post("/tabs/:tabName", async function (req, res) {
 router.post("/categories/:tabID/:categoryName", async function (req, res) {
   let categoryName = req.params.categoryName;
   try {
-    let tabID = databaseQueries.getIdObject(req.params.tabID);
+    let tabID = getIdObject(req.params.tabID);
     let categoryExisted = await databaseQueries.categoryIsExisted();
     if (categoryExisted) {
       res.status(409).send({ msg: `The category ${categoryName} is already exist` });
