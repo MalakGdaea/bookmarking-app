@@ -81,7 +81,7 @@ router.post("/bookmarks", async function (req, res) {
     res.status(409).send({ msg: `This bookmark is already exist` });
   } else {
     try {
-      let [title, URL, category, tags, note] = [bookmark.title, bookmark.URL, getIdObject(bookmark.category), bookmark.tags]
+      let [title, URL, category, tags, note] = [bookmark.title, bookmark.URL, getIdObject(bookmark.category), bookmark.tags, bookmark.note]
       let bookmarkDocument = databaseQueries.createBookmark(title, URL, category, tags, note);
       bookmarkDocument.save();
       res.status(201).send({ msg: `one bookmark added successfully` });
