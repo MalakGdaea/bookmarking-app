@@ -22,8 +22,9 @@ Nodejs server with Express, MongoDB.
 The project currently contains two parts that run on different servers, the front-end `http://localhost:3000` and the back-end `http://localhost:3012`, so the front end sends requests to the server by the fetch method.
 
 1. cd to the backend folder and write`npm install` in the terminal .
-2. cd to the frontend folder and write run the command `npm install`.
-3. in the frontend folder run `npm start` which will run the app in your default browser.
+2. while you in the backend folder run `node server`
+3. cd to the frontend folder and write run the command `npm install`.
+4. in the frontend folder run `npm start` which will run the app in your default browser.
 
 # Extra points
 I didn't add default data to the app so please don't be surprised when it looks empty.
