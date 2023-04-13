@@ -1,16 +1,27 @@
-import { SERVER_ROUTE } from "../config";
+import { SERVER_ROUTE, CONFLICT_STATUS_CODE } from "../config";
 const DataManager = function () {
   const addTab = (tabName, setTabs) => {
-    fetch(`${SERVER_ROUTE}tabs/${tabName}`, { method: "POST" }).then(() => {
-      updateTabsData(setTabs);
+    fetch(`${SERVER_ROUTE}tabs/${tabName}`, { method: "POST" }).then((response) => {
+      if (response.status === CONFLICT_STATUS_CODE) {
+        console.log(response);
+        alert(`The ${tabName} tab already exist.`)
+      }
+      else {
+        updateTabsData(setTabs);
+      }
     });
   };
 
   const addCategory = (name, tabID, setCategories) => {
     fetch(`${SERVER_ROUTE}categories/${tabID}/${name}`, {
       method: "POST",
-    }).then(() => {
-      updateCategories(tabID, setCategories);
+    }).then((response) => {
+      if (response.status === CONFLICT_STATUS_CODE) {
+        alert(`The ${name} tab already exist.`)
+      }
+      else {
+        updateCategories(tabID, setCategories);
+      }
     });
   };
 
@@ -19,7 +30,10 @@ const DataManager = function () {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(bookmark),
-    }).then(() => {
+    }).then((response) => {
+      if (response.status === CONFLICT_STATUS_CODE) {
+        alert(`The ${bookmark.title} tab already exist.`)
+      }
       updateCategories(tabID, setCategories);
     });
   };

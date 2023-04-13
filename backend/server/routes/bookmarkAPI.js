@@ -59,7 +59,7 @@ router.post("/categories/:tabID/:categoryName", async function (req, res) {
   let categoryName = req.params.categoryName;
   try {
     let tabID = getIdObject(req.params.tabID);
-    let categoryExisted = await databaseQueries.categoryIsExisted();
+    let categoryExisted = await databaseQueries.categoryIsExisted(tabID, categoryName);
     if (categoryExisted) {
       res.status(409).send({ msg: `The category ${categoryName} is already exist` });
     } else {

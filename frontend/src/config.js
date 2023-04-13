@@ -4,5 +4,6 @@ const ICON_SIZE = 19;
 const ADD_TAB = "Add Tab";
 const ADD_Category = "Add Category";
 const DELETE_TAB = "Delete Tab";
-export { SERVER_ROUTE, FAV_ICON_LINK, ICON_SIZE, ADD_TAB, ADD_Category, DELETE_TAB, };
+const CONFLICT_STATUS_CODE = 409;
+export { SERVER_ROUTE, FAV_ICON_LINK, ICON_SIZE, ADD_TAB, ADD_Category, DELETE_TAB, CONFLICT_STATUS_CODE };
 
