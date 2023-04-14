@@ -26,10 +26,18 @@
   flex-direction: column;
 }
 
-.icon {
+.settings {
   position: absolute;
-  right: 1rem;
+  right: 3rem;
   top: 0.5rem;
+  cursor: pointer;
+}
+
+.arrow {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.3rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
