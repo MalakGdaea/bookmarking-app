@@ -36,21 +36,24 @@ function Home({ tabID, isShown, sectionName, hideForm, addTab, deleteTab }) {
     <div>
       <input className="category-input search-input" type="text" value={searchedCategory}
         placeholder="Find Category" onChange={updateSearchedCategory} />
-      {isShown && (
+      {isShown && (<div>
+        <div className="page-mask"></div>
         <Form formName={sectionName} hideForm={hideForm} addTab={addTab}
           addCategory={(name) => dataManager.addCategory(name, tabID, setCategories)}
           deleteTab={deleteTab}
-        />
+        /></div>
       )}
       <CategoriesList categories={wantedCategories} setEditedCategoryID={setEditedCategoryID}
         showBookmarkForm={showBookmarkForm}
         deleteCategory={(categoryID) => dataManager.deleteCategory(categoryID, tabID, setCategories)}
       />
       {displayBookmarkForm && (
-        <BookmarkForm categoryID={editedCategoryID}
-          addBookmark={(bookmark) => dataManager.addBookmark(bookmark, tabID, setCategories)}
-          hideBookmarkForm={hideBookmarkForm}
-        />
+        <div>
+          <div className="page-mask"></div>
+          <BookmarkForm categoryID={editedCategoryID}
+            addBookmark={(bookmark) => dataManager.addBookmark(bookmark, tabID, setCategories)}
+            hideBookmarkForm={hideBookmarkForm}
+          /></div>
       )}
     </div>
   );

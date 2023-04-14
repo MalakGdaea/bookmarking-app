@@ -36,6 +36,7 @@ function Dashboard() {
   const hideForm = () => {
     setIsShown(false);
   };
+  
   return (
     <div>
       <TabsBar tabs={tabs} chooseTab={chooseTab} />
